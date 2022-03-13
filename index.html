@@ -71,15 +71,16 @@
 		for (let i = 0; i < itemsToCreate; i++) {
 			const image = document.createElement('img')
 			image.setAttribute('src', src)
+			image.addEventListener('load', () => {
+				const wrapper = document.createElement('div')
+				wrapper.appendChild(image)
+				wrapper.style.setProperty('--x', Math.random())
+				wrapper.style.setProperty('--scale', randomInRange(scale))
+				wrapper.style.setProperty('--duration', Math.round(randomInRange(duration)))
+				wrapper.style.setProperty('--delay', Math.round(randomInRange(delay)))
 
-			const wrapper = document.createElement('div')
-			wrapper.appendChild(image)
-			wrapper.style.setProperty('--x', Math.random())
-			wrapper.style.setProperty('--scale', randomInRange(scale))
-			wrapper.style.setProperty('--duration', Math.round(randomInRange(duration)))
-			wrapper.style.setProperty('--delay', Math.round(randomInRange(delay)))
-
-			body.appendChild(wrapper)
+				body.appendChild(wrapper)
+			})
 		}
 	</script>
 </body>
