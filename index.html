@@ -33,8 +33,9 @@
 		}
 
 		div {
-			position: absolute;
+			position: fixed;
 			top: 100%;
+			transform: translateY(calc(0.5 * var(--scale) * 100%));
 			animation-name: release, fade-out;
 			animation-duration: calc(1ms * var(--duration));
 			animation-delay: calc(1ms * var(--delay));
