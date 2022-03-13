@@ -35,7 +35,6 @@
 		div {
 			position: fixed;
 			top: 100%;
-			transform: translateY(calc(0.5 * var(--scale) * 100%));
 			animation-name: release, fade-out;
 			animation-duration: calc(1ms * var(--duration));
 			animation-delay: calc(1ms * var(--delay));
@@ -44,7 +43,9 @@
 		}
 
 		div img {
-			transform: translateX(calc(var(--x) * (100vw - 100%))) scale(var(--scale))
+			width: calc(1px * var(--width));
+			height: calc(1px * var(--height));
+			transform: translateX(calc(var(--x) * (100vw - 100%)))
 		}
 	</style>
 </head>
@@ -88,9 +89,11 @@
 			image.setAttribute('src', src)
 			image.addEventListener('load', () => {
 				const wrapper = document.createElement('div')
+				const scaleFactor = randomInRange(scale)
 				wrapper.appendChild(image)
+				wrapper.style.setProperty('--width', scaleFactor * image.width)
+				wrapper.style.setProperty('--height', scaleFactor * image.height)
 				wrapper.style.setProperty('--x', Math.random())
-				wrapper.style.setProperty('--scale', randomInRange(scale))
 				wrapper.style.setProperty('--duration', Math.round(randomInRange(duration)))
 				wrapper.style.setProperty('--delay', Math.round(randomInRange(delay)))
 
