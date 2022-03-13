@@ -50,20 +50,33 @@
 <body>
 	<noscript>JavaScript is required</noscript>
 	<script>
-		const itemsToCreate = 20
+		const getParameter = (() => {
+			const parameters = new URLSearchParams(window.location.search);
+			return (name, isString = false) => {
+				const rawValue = parameters.get(name)
+				if (isString) {
+					return rawValue
+				}
+				const floatValue = parseFloat(rawValue ?? '')
+				return Number.isNaN(floatValue) ? null : floatValue
+			}
+		})()
+
+
+		const itemsToCreate = getParameter('count') ?? 20
 		const scale = {
-			min: 0.5,
-			max: 1,
+			min: getParameter('scaleMin') ?? 0.5,
+			max: getParameter('scaleMax') ?? 1,
 		}
 		const duration = {
-			min: 500,
-			max: 1500,
+			min: getParameter('durationMin') ?? 500,
+			max: getParameter('durationMax') ?? 1500,
 		}
 		const delay = {
-			min: 0,
-			max: 1000,
+			min: getParameter('delayMin') ?? 0,
+			max: getParameter('delayMax') ?? 1000,
 		}
-		const src = "https://placekitten.com/200/300"
+		const src = getParameter('src', true) ?? "https://placekitten.com/200/300"
 		const { body } = document
 
 		const randomInRange = ({ min, max }) => (min + Math.random() * (max - min))
