@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Image release</title>
+	<style>
+		body {
+			background-color: rgba(0, 0, 0, 0);
+			min-height: 100vh;
+			position: relative;
+			overflow: hidden;
+			margin: 0;
+		}
+
+		@keyframes release {
+			100% {
+				transform: translateY(calc(-50vh - 100%));
+			}
+		}
+
+		@keyframes fade-out {
+			70% {
+				opacity: 1;
+			}
+
+			100% {
+				opacity: 0;
+			}
+		}
+
+		div {
+			position: absolute;
+			top: 100%;
+			animation-name: release, fade-out;
+			animation-duration: calc(1ms * var(--duration));
+			animation-delay: calc(1ms * var(--delay));
+			animation-timing-function: ease-in;
+			animation-fill-mode: forwards;
+		}
+
+		div img {
+			transform: translateX(calc(var(--x) * (100vw - 100%))) scale(var(--scale))
+		}
+	</style>
+</head>
+
+<body>
+	<noscript>JavaScript is required</noscript>
+	<script>
+		const itemsToCreate = 20
+		const scale = {
+			min: 0.5,
+			max: 1,
+		}
+		const duration = {
+			min: 500,
+			max: 1500,
+		}
+		const delay = {
+			min: 0,
+			max: 1000,
+		}
+		const src = "https://placekitten.com/200/300"
+		const { body } = document
+
+		const randomInRange = ({ min, max }) => (min + Math.random() * (max - min))
+
+		for (let i = 0; i < itemsToCreate; i++) {
+			const image = document.createElement('img')
+			image.setAttribute('src', src)
+
+			const wrapper = document.createElement('div')
+			wrapper.appendChild(image)
+			wrapper.style.setProperty('--x', Math.random())
+			wrapper.style.setProperty('--scale', randomInRange(scale))
+			wrapper.style.setProperty('--duration', Math.round(randomInRange(duration)))
+			wrapper.style.setProperty('--delay', Math.round(randomInRange(delay)))
+
+			body.appendChild(wrapper)
+		}
+	</script>
+</body>
+
+</html>
